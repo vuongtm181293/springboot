@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.edu.Bike.models.Bike;
 
 @RestController
-@RequestMapping("/api/bikes")
+@RequestMapping("/api/bikes")  //http://localhost:8080/api/bikes
 public class BikeController {
 
 	@GetMapping
