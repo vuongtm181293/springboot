@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -17,10 +18,17 @@ import my.edu.contact.entity.Contact;
 import my.edu.contact.service.ContactService;
 
 @Controller
+
 public class ContactController {
 
 	@Autowired
 	private ContactService contactService;
+
+	@GetMapping("/index")
+	public String home(Model model) {
+		//model.addAttribute("contacts", contactService.findAll());
+		return "index";
+	}
 
 	@GetMapping("/contact")
 	public String list(Model model) {
@@ -53,17 +61,17 @@ public class ContactController {
 		redirect.addFlashAttribute("successMessage", "Saved contact successfully!");
 		return "redirect:/contact";
 	}
-	
+
 	@GetMapping("/contact/{id}/edit")
 	public String edit(@PathVariable("id") Integer id, Model model) {
-	    model.addAttribute("contact", contactService.findOne(id));
-	    return "form";
+		model.addAttribute("contact", contactService.findOne(id));
+		return "form";
 	}
-	
+
 	@GetMapping("/contact/{id}/delete")
 	public String delete(@PathVariable int id, RedirectAttributes redirect) {
-	    contactService.delete(id);
-	    redirect.addFlashAttribute("successMessage", "Deleted contact successfully!");
-	    return "redirect:/contact";
+		contactService.delete(id);
+		redirect.addFlashAttribute("successMessage", "Deleted contact successfully!");
+		return "redirect:/contact";
 	}
 }
